@@ -14,7 +14,13 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->comment = "Primary key";
+            $table->string('firstname', 255)->comment = "The admin's firstname.";
+            $table->string('lastname', 255)->comment = "The admin's lastname.";
+            $table->string('username', 255)->unique()->comment = "The administrator's username";
+            $table->string('password')->unique()->comment = "The admin's password.";
+            $table->string('role', 255)->default('admin')->comment = "The admin's role.";
+
             $table->timestamps();
         });
     }

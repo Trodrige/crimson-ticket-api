@@ -19,3 +19,7 @@ $router->get('/key', function() {
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/foo', function() {
+  return 'hello Rodrige';
+});
