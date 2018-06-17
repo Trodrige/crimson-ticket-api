@@ -43,4 +43,15 @@ $router->group(['prefix'=>'api/v1'], function($router){
 	$router->put('journey/{id}', 'JourneysController@put');
 	$router->delete('journey/{id}', 'JourneysController@remove');
 
+	/**
+	 * Routes for resource passanger-journey
+	 */
+	$router->get('passanger-journey', 'PassangerJourneysController@all');
+	$router->get('passanger-journey/{id}', 'PassangerJourneysController@get');
+	$router->post('passanger-journey', 'PassangerJourneysController@add');
+	$router->put('passanger-journey/{id}', 'PassangerJourneysController@put');
+	$router->delete('passanger-journey/{id}', 'PassangerJourneysController@remove');
+
+
 });
+

@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Journey;
 
 class Transaction extends Model {
 
@@ -9,6 +10,9 @@ class Transaction extends Model {
     ];
 
     protected $dates = [];
+
+    protected $appends = ['journey'];
+
 
     public static $rules = [
         // Validation rules
@@ -28,6 +32,12 @@ class Transaction extends Model {
      public function journey()
      {
          return $this->belongsTo('App\Journey');
+     }
+
+     public function getJourneyAttribute()
+     {
+        return Journey::find($this->attributes['journey_id']);
+
      }
 
 }
