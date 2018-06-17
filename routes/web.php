@@ -32,4 +32,15 @@ $router->group(['prefix'=>'api/v1'], function($router){
 	$router->post('car', 'CarsController@add');
 	$router->put('car/{id}', 'CarsController@put');
 	$router->delete('car/{id}', 'CarsController@remove');
+
+
+	/**
+	 * Routes for resource journey
+	 */
+	$router->get('journey', 'JourneysController@all');
+	$router->get('journey/{id}', 'JourneysController@get');
+	$router->post('journey', 'JourneysController@add');
+	$router->put('journey/{id}', 'JourneysController@put');
+	$router->delete('journey/{id}', 'JourneysController@remove');
+
 });
