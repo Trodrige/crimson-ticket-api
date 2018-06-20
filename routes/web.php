@@ -15,11 +15,21 @@
 $router->get('/key', function() {
     return str_random(32);
 }); */
+$router->group(['prefix'=>'api/v1'], function($router){
+	$router->get('/', function () use ($router) {
+	    return $router->app->version();
+	});
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+	$router->get('/foo', function() {
+	  return 'hello Rodrige';
+	});
 
-$router->get('/foo', function() {
-  return 'hello Rodrige';
+	/**
+	 * Routes for resource car
+	 */
+	$router->get('car', 'CarsController@all');
+	$router->get('car/{id}', 'CarsController@get');
+	$router->post('car', 'CarsController@add');
+	$router->put('car/{id}', 'CarsController@put');
+	$router->delete('car/{id}', 'CarsController@remove');
 });
