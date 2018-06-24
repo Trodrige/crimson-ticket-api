@@ -32,4 +32,7 @@ $router->group(['prefix'=>'api/v1'], function($router){
 	$router->post('car', 'CarsController@add');
 	$router->put('car/{id}', 'CarsController@put');
 	$router->delete('car/{id}', 'CarsController@remove');
+
+	// set car type
+	$router->post('car/{id}/type', 'CarsController@setType');
 });
