@@ -15,21 +15,26 @@
 $router->get('/key', function() {
     return str_random(32);
 }); */
-$router->group(['prefix'=>'api/v1'], function($router){
+
+// The routes in this group can be accessed without the token
+$router->group(['prefix' => 'api/v1'], function($router){
 	$router->get('/', function () use ($router) {
 	    return $router->app->version();
 	});
+	
+	/*** Routes for users ***/
+	$router->post('auth/login', 'UserController@login'); // Data are: username and password
+	$router->post('auth/register', 'UserController@register'); // Data are: firstname, lastname, username, password, role(s->superadmin, a->admin)
+});
 
-	$router->get('/foo', function() {
-	  return 'hello Rodrige';
-	});
+// The routes in this group need the token to be accessed
+$router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
 
-	/**
-	* Routes for users
-	*/
-	$router->post('auth/login', 'UserController@login');
-	$router->post('auth/register', 'UserController@register');
-
+	/*** Routes for users ***/
+	$router->get('users', function() {
+	            $users = \App\User::all();
+	            return response()->json($users);
+	        });
 	/**
 	 * Routes for resource car
 	 */
@@ -41,4 +46,23 @@ $router->group(['prefix'=>'api/v1'], function($router){
 
 	// set car type
 	$router->post('car/{id}/type', 'CarsController@setType');
+
+	/**
+	 * Routes for resource journey
+	 */
+	$router->get('journey', 'JourneysController@all');
+	$router->get('journey/{id}', 'JourneysController@get');
+	$router->post('journey', 'JourneysController@add');
+	$router->put('journey/{id}', 'JourneysController@put');
+	$router->delete('journey/{id}', 'JourneysController@remove');
+
+	/**
+	 * Routes for resource passanger-journey
+	 */
+	$router->get('passanger-journey', 'PassangerJourneysController@all');
+	$router->get('passanger-journey/{id}', 'PassangerJourneysController@get');
+	$router->post('passanger-journey', 'PassangerJourneysController@add');
+	$router->put('passanger-journey/{id}', 'PassangerJourneysController@put');
+	$router->delete('passanger-journey/{id}', 'PassangerJourneysController@remove');
+
 });

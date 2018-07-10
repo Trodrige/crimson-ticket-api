@@ -43,7 +43,7 @@ class UserController extends BaseController
             'iss' => "lumen-jwt", // Issuer of the token
             'sub' => $user->id, // Subject of the token
             'iat' => time(), // Time when JWT was issued.
-            'exp' => time() + 60*60 // Expiration time
+            'exp' => time() + 60 * 60 // Expiration time
         ];
 
         // As you can see we are passing `JWT_SECRET` as the second parameter that will
@@ -88,4 +88,65 @@ class UserController extends BaseController
             'error' => 'Username or password is wrong.'
         ], 400);
     }
+
+    /**
+     * Register a user and return the token if the provided credentials are correct, and user is created.
+     *
+     * @param  \App\User   $user
+     * @return mixed
+     */
+    public function register(Request $request)
+    {
+        $this->validate($this->request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'role' => 'required'
+        ]);
+
+        // Find the user by username
+        $user = User::where('username', $this->request->input('username'))->first();
+        if ($user) {
+            // You wil probably have some sort of helpers or whatever
+            // to make sure that you have the same response format for
+            // differents kind of responses. But let's return the
+            // below response for now.
+            return response()->json([
+                'error' => 'Username already exists.'
+            ], 400);
+        } else {
+            $newUser = User::create([
+                'firstname' => $this->request->input('firstname'),
+                'lastname' => $this->request->input('lastname'),
+                'username' => $this->request->input('username'),
+                'password' => $this->request->input('password'),
+                'role' => $this->request->input('role')
+            ]);
+
+            if($newUser) {
+                return response()->json([
+                    'success' => 'New user created.',
+                    'token' => $this->jwt($newUser)
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Error occured creating new user.'
+                ], 400);
+            }
+        }
+
+        /* Verify the password and generate the token
+        if (Hash::check($this->request->input('password'), $user->password)) {
+            return response()->json([
+                'token' => $this->jwt($user)
+            ], 200);
+        } */
+
+        // Bad Request response
+        return response()->json([
+            'error' => 'Username or password is wrong.'
+        ], 400);
+    }
+
 }
