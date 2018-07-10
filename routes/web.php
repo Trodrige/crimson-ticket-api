@@ -43,8 +43,8 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($rou
 	$router->post('car', 'CarsController@add');
 	$router->put('car/{id}', 'CarsController@put');
 	$router->delete('car/{id}', 'CarsController@remove');
-
-	// set car type
+  
+  // set car type
 	$router->post('car/{id}/type', 'CarsController@setType');
 
 	/**
