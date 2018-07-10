@@ -76,6 +76,7 @@ class UserController extends BaseController
         }
 
         // Verify the password and generate the token
+        // if (Hash::check($this->request->input('password'), app('hash')->make($user->password))) {
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'token' => $this->jwt($user)
@@ -119,7 +120,7 @@ class UserController extends BaseController
                 'firstname' => $this->request->input('firstname'),
                 'lastname' => $this->request->input('lastname'),
                 'username' => $this->request->input('username'),
-                'password' => $this->request->input('password'),
+                'password' => app('hash')->make($this->request->input('password')), //hash the password before saving 
                 'role' => $this->request->input('role')
             ]);
 
