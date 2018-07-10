@@ -15,15 +15,26 @@
 $router->get('/key', function() {
     return str_random(32);
 }); */
-$router->group(['prefix'=>'api/v1'], function($router){
+
+// The routes in this group can be accessed without the token
+$router->group(['prefix' => 'api/v1'], function($router){
 	$router->get('/', function () use ($router) {
 	    return $router->app->version();
 	});
+	
+	/*** Routes for users ***/
+	$router->post('auth/login', 'UserController@login'); // Data are: username and password
+	$router->post('auth/register', 'UserController@register'); // Data are: firstname, lastname, username, password, role(s->superadmin, a->admin)
+});
 
-	$router->get('/foo', function() {
-	  return 'hello Rodrige';
-	});
+// The routes in this group need the token to be accessed
+$router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
 
+	/*** Routes for users ***/
+	$router->get('users', function() {
+	            $users = \App\User::all();
+	            return response()->json($users);
+	        });
 	/**
 	 * Routes for resource car
 	 */
