@@ -25,6 +25,12 @@ $router->group(['prefix'=>'api/v1'], function($router){
 	});
 
 	/**
+	* Routes for users
+	*/
+	$router->post('auth/login', 'UserController@login');
+	$router->post('auth/register', 'UserController@register');
+
+	/**
 	 * Routes for resource car
 	 */
 	$router->get('car', 'CarsController@all');

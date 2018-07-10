@@ -20,7 +20,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'firstname' => $faker->firstName($gender),
         'lastname' => $faker->lastName,
         'username' => $faker->userName,
-        'password' => $faker->password,
+        'password' => app('hash')->make('yourpassword'),
         'role' => $faker->randomElement($roles), // a->admin, s->superadmin
     ];
 });
