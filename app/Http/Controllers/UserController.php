@@ -77,7 +77,7 @@ class UserController extends BaseController
 
         // Verify the password and generate the token
         // if (Hash::check($this->request->input('password'), app('hash')->make($user->password))) {
-        /if (Hash::check($this->request->input('password'), $user->password)) {
+        if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'token' => $this->jwt($user)
             ], 200);
