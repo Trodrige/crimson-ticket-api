@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Car extends Model {
 
@@ -10,12 +11,18 @@ class Car extends Model {
 
     protected $dates = [];
 
+    protected $appends = ['user'];
+
     public static $rules = [
         // Validation rules
         'car_num' => 'required|string|max:255',
         'type' => 'required',
         'num_of_seats' => 'required|numeric',
         'user_id' => 'required|numeric',
+    ];
+
+  protected $hidden = [
+        'id', 'user_id',
     ];
 
     // Relationships
@@ -35,4 +42,12 @@ class Car extends Model {
      {
          return $this->belongsTo('App\User');
      }
+
+
+
+      public function getUserAttribute()
+      {
+
+         return User::find($this->attributes['user_id']);
+      }
 }

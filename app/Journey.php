@@ -1,6 +1,9 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use App\Car;
+
 
 class Journey extends Model {
 
@@ -9,6 +12,16 @@ class Journey extends Model {
     ];
 
     protected $dates = [];
+        /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'user_id', 'car_id',
+    ];
+
+    protected $appends = ['car', 'user'];
 
     public static $rules = [
         // Validation rules
@@ -46,6 +59,16 @@ class Journey extends Model {
       public function car()
       {
           return $this->belongsTo('App\Car');
+      }
+
+      public function getCarAttribute()
+      {
+         return Car::find($this->attributes['car_id']);
+      }
+
+      public function getUserAttribute()
+      {
+         return User::find($this->attributes['user_id']);
       }
 
 }

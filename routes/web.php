@@ -32,7 +32,26 @@ $router->group(['prefix'=>'api/v1'], function($router){
 	$router->post('car', 'CarsController@add');
 	$router->put('car/{id}', 'CarsController@put');
 	$router->delete('car/{id}', 'CarsController@remove');
-
-	// set car type
+  
+  // set car type
 	$router->post('car/{id}/type', 'CarsController@setType');
+
+	/**
+	 * Routes for resource journey
+	 */
+	$router->get('journey', 'JourneysController@all');
+	$router->get('journey/{id}', 'JourneysController@get');
+	$router->post('journey', 'JourneysController@add');
+	$router->put('journey/{id}', 'JourneysController@put');
+	$router->delete('journey/{id}', 'JourneysController@remove');
+
+	/**
+	 * Routes for resource passanger-journey
+	 */
+	$router->get('passanger-journey', 'PassangerJourneysController@all');
+	$router->get('passanger-journey/{id}', 'PassangerJourneysController@get');
+	$router->post('passanger-journey', 'PassangerJourneysController@add');
+	$router->put('passanger-journey/{id}', 'PassangerJourneysController@put');
+	$router->delete('passanger-journey/{id}', 'PassangerJourneysController@remove');
+
 });
