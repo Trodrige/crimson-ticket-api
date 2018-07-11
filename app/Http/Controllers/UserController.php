@@ -76,6 +76,7 @@ class UserController extends BaseController
         }
 
         // Verify the password and generate the token
+        // if (Hash::check($this->request->input('password'), app('hash')->make($user->password))) {
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'token' => $this->jwt($user)
@@ -115,24 +116,25 @@ class UserController extends BaseController
                 'error' => 'Username already exists.'
             ], 400);
         }
+      
+            $newUser = User::create([
+                'firstname' => $this->request->input('firstname'),
+                'lastname' => $this->request->input('lastname'),
+                'username' => $this->request->input('username'),
+                'password' => app('hash')->make($this->request->input('password')), //hash the password before saving 
+                'role' => $this->request->input('role')
+            ]);
 
-        $newUser = User::create([
-            'firstname' => $this->request->input('firstname'),
-            'lastname' => $this->request->input('lastname'),
-            'username' => $this->request->input('username'),
-            'password' => $this->request->input('password'),
-            'role' => $this->request->input('role')
-        ]);
-
-        if($newUser) {
-            return response()->json([
-                'success' => 'New user created.',
-                'token' => $this->jwt($newUser)
-            ], 200);
-        } else {
-            return response()->json([
-                'error' => 'Error occured creating new user.'
-            ], 400);
+            if($newUser) {
+                return response()->json([
+                    'success' => 'New user created.',
+                    'token' => $this->jwt($newUser)
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Error occured creating new user.'
+                ], 400);
+            }
         }
 
         /* Verify the password and generate the token
