@@ -114,25 +114,25 @@ class UserController extends BaseController
             return response()->json([
                 'error' => 'Username already exists.'
             ], 400);
-        } else {
-            $newUser = User::create([
-                'firstname' => $this->request->input('firstname'),
-                'lastname' => $this->request->input('lastname'),
-                'username' => $this->request->input('username'),
-                'password' => $this->request->input('password'),
-                'role' => $this->request->input('role')
-            ]);
+        }
 
-            if($newUser) {
-                return response()->json([
-                    'success' => 'New user created.',
-                    'token' => $this->jwt($newUser)
-                ], 200);
-            } else {
-                return response()->json([
-                    'error' => 'Error occured creating new user.'
-                ], 400);
-            }
+        $newUser = User::create([
+            'firstname' => $this->request->input('firstname'),
+            'lastname' => $this->request->input('lastname'),
+            'username' => $this->request->input('username'),
+            'password' => $this->request->input('password'),
+            'role' => $this->request->input('role')
+        ]);
+
+        if($newUser) {
+            return response()->json([
+                'success' => 'New user created.',
+                'token' => $this->jwt($newUser)
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Error occured creating new user.'
+            ], 400);
         }
 
         /* Verify the password and generate the token
