@@ -21,7 +21,13 @@ $router->group(['prefix' => 'api/v1'], function($router){
 	$router->get('/', function () use ($router) {
 	    return $router->app->version();
 	});
-	
+
+	/*** Routes for users ***/
+	$router->get('users', function() {
+	            $users = \App\User::all();
+	            return response()->json($users);
+	        });
+
 	/*** Routes for users ***/
 	$router->post('auth/login', 'UserController@login'); // Data are: username and password
 	$router->post('auth/register', 'UserController@register'); // Data are: firstname, lastname, username, password, role(s->superadmin, a->admin)
@@ -29,12 +35,7 @@ $router->group(['prefix' => 'api/v1'], function($router){
 
 // The routes in this group need the token to be accessed
 $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
-
-	/*** Routes for users ***/
-	$router->get('users', function() {
-	            $users = \App\User::all();
-	            return response()->json($users);
-	        });
+	
 	/**
 	 * Routes for resource car
 	 */
@@ -43,7 +44,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($rou
 	$router->post('car', 'CarsController@add');
 	$router->put('car/{id}', 'CarsController@put');
 	$router->delete('car/{id}', 'CarsController@remove');
-  
+
   // set car type
 	$router->post('car/{id}/type', 'CarsController@setType');
 

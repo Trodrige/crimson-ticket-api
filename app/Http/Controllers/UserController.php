@@ -115,7 +115,8 @@ class UserController extends BaseController
             return response()->json([
                 'error' => 'Username already exists.'
             ], 400);
-        } else {
+        }
+      
             $newUser = User::create([
                 'firstname' => $this->request->input('firstname'),
                 'lastname' => $this->request->input('lastname'),
