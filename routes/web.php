@@ -56,6 +56,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($rou
 	$router->post('journey', 'JourneysController@add');
 	$router->put('journey/{id}', 'JourneysController@put');
 	$router->delete('journey/{id}', 'JourneysController@remove');
+	$router->post('journey/search', 'JourneysController@search');
 
 	/**
 	 * Routes for resource passanger-journey
