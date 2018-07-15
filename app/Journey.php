@@ -18,7 +18,7 @@ class Journey extends Model {
      * @var array
      */
     protected $hidden = [
-        'user_id', 'car_id',
+        'id, user_id', 'car_id',
     ];
 
     protected $appends = ['car', 'user'];
