@@ -31,11 +31,14 @@ $router->group(['prefix' => 'api/v1'], function($router){
 	/*** Routes for users ***/
 	$router->post('auth/login', 'UserController@login'); // Data are: username and password
 	$router->post('auth/register', 'UserController@register'); // Data are: firstname, lastname, username, password, role(s->superadmin, a->admin)
+
+	/*** Routes for resource journey ***/
+	$router->get('journey', 'JourneysController@all'); // users and admins can view journeys
 });
 
 // The routes in this group need the token to be accessed
 $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
-	
+
 	/**
 	 * Routes for resource car
 	 */
@@ -51,15 +54,15 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($rou
 	/**
 	 * Routes for resource journey
 	 */
-	$router->get('journey', 'JourneysController@all');
-	$router->get('journey/{id}', 'JourneysController@get');
+	$router->get('journey', 'JourneysController@all'); // users and admins can view journeys
+	$router->get('journey/{id}', 'JourneysController@get'); //
 	$router->post('journey', 'JourneysController@add');
 	$router->put('journey/{id}', 'JourneysController@put');
 	$router->delete('journey/{id}', 'JourneysController@remove');
 	$router->post('journey/search', 'JourneysController@search');
 
 	/**
-	 * Routes for resource passanger-journey
+	 * Routes for resource passenger-journey
 	 */
 	$router->get('passanger-journey', 'PassangerJourneysController@all');
 	$router->get('passanger-journey/{id}', 'PassangerJourneysController@get');
