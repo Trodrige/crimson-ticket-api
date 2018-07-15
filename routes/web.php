@@ -34,8 +34,8 @@ $router->group(['prefix' => 'api/v1'], function($router){
 });
 
 // The routes in this group need the token to be accessed
-//$router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
-$router->group(['prefix' => 'api/v1'], function($router){
+$router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
+//$router->group(['prefix' => 'api/v1'], function($router){
 	
 	/**
 	 * Routes for resource car
@@ -68,7 +68,7 @@ $router->group(['prefix' => 'api/v1'], function($router){
 
 
 
-	
+
 	/**
 	 * Routes for resource transaction
 	 */
