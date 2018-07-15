@@ -24,6 +24,9 @@ class Transaction extends Model {
         'journey_id' => 'required|numeric',
     ];
 
+    // protected $hidden = [
+    //     'id', 'journey_id',
+    // ];
     // Relationships
 
     /**
