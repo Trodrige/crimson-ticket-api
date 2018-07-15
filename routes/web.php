@@ -38,6 +38,7 @@ $router->group(['prefix' => 'api/v1'], function($router){
 
 // The routes in this group need the token to be accessed
 $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($router){
+//$router->group(['prefix' => 'api/v1'], function($router){
 
 	/**
 	 * Routes for resource car
@@ -64,10 +65,17 @@ $router->group(['prefix' => 'api/v1', 'middleware' => 'jwt.auth'], function($rou
 	/**
 	 * Routes for resource passenger-journey
 	 */
-	$router->get('passanger-journey', 'PassangerJourneysController@all');
-	$router->get('passanger-journey/{id}', 'PassangerJourneysController@get');
-	$router->post('passanger-journey', 'PassangerJourneysController@add');
-	$router->put('passanger-journey/{id}', 'PassangerJourneysController@put');
-	$router->delete('passanger-journey/{id}', 'PassangerJourneysController@remove');
+	$router->get('passanger-journey', 'PassangerJourneysController@all'); //all passengers on all journeys
+	$router->get('passanger-journey/{id}', 'PassangerJourneysController@get'); //all pasengers on journey with id {id}
+	$router->get('passanger-journey/passenger/{cni}', 'PassangerJourneysController@getTransactionByUserCNI'); //details of passenger with cni
+
+	/**
+	 * Routes for resource transaction
+	 */
+	$router->get('transaction', 'TransactionsController@all');
+	$router->get('transaction/{id}', 'TransactionsController@get');
+	$router->post('transaction', 'TransactionsController@add');
+	$router->put('transaction/{id}', 'TransactionsController@put');
+	$router->delete('transaction/{id}', 'TransactionsController@remove');
 
 });

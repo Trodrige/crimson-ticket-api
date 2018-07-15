@@ -5,7 +5,7 @@ use App\Journey;
 use App\Transaction;
 
 class PassangerJourney extends Model {
-
+    //this model doesnot have a mapping to the database.
     protected $fillable = [];
 
     protected $dates = [];
@@ -14,8 +14,11 @@ class PassangerJourney extends Model {
         // Validation rules
     ];
 
-    protected $appends = ['transaction'];
-
+    //protected $appends = ['transaction'];
+    
+    // protected $hidden = [
+    //     'id', 'user_id',
+    // ];
 
     // Relationships
 
@@ -29,13 +32,10 @@ class PassangerJourney extends Model {
     	return Transaction::all();
     }
 
+    //returns all passengers on all journeys
     public static function allTransactions()
     {
-    	return Transaction::get();
+    	return Transaction::all();
     }
-
-    public static function userTransaction($value='')
-    {
-    	return Transaction::find($value);
-    }
+ 
 }
